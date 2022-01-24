@@ -117,8 +117,8 @@ local setup_config = {
 		},
 		find_files = {
 			layout_config = { height = 35, preview_width = 0.55 },
-			hidden = true,
-			no_ignore = true,
+			hidden = false,
+			no_ignore = false,
 		},
 		help_tags = {
 			layout_config = { height = 35, preview_width = 0.65 },
