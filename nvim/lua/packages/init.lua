@@ -56,13 +56,13 @@ local on_packer_start = function(use)
 		end,
 	})
 
-  -- UI
+	-- UI
 	use({
-    "rafamadriz/themes.nvim",
-    config = function ()
-      vim.cmd("colorscheme gruvbox")
-    end
-  })
+		"rafamadriz/themes.nvim",
+		config = function()
+			vim.cmd("colorscheme gruvbox")
+		end,
+	})
 	use({
 		"nvim-lualine/lualine.nvim",
 		config = function()
@@ -89,14 +89,26 @@ local on_packer_start = function(use)
 		end,
 	})
 
-  -- Utils
-  use({
-    "moll/vim-bbye",
-    config = function ()
-	    local map_opts = { noremap = true, silent = true }
-      vim.api.nvim_set_keymap("n", "<leader>bd", ":Bdelete<CR>", map_opts)
-    end
-  })
+	-- Utils
+	use({
+		"moll/vim-bbye",
+		config = function()
+			local map_opts = { noremap = true, silent = true }
+			vim.api.nvim_set_keymap("n", "<leader>bd", ":Bdelete<CR>", map_opts)
+		end,
+	})
+
+	-- Git support
+	use({
+		"TimUntersberger/neogit",
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"sindrets/diffview.nvim",
+		},
+		config = function()
+			require("packages.neogit").setup()
+		end,
+	})
 end
 
 local install_pack_if_needed = function()
