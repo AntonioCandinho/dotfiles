@@ -109,6 +109,16 @@ local on_packer_start = function(use)
 			require("packages.neogit").setup()
 		end,
 	})
+
+
+  -- File manager
+  use({
+    'kevinhwang91/rnvimr',
+    config = function ()
+      require("packages.file-manager").setup()
+    end
+  })
+
 end
 
 local install_pack_if_needed = function()
