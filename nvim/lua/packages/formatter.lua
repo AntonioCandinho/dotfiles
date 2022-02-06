@@ -18,8 +18,8 @@ end
 
 M.prettier = function(opts)
 	return fmt({
-		exe = "prettier",
-		args = vim.tbl_flatten({ "--stdin-filepath", vim.api.nvim_buf_get_name(0), opts or {} }),
+		exe = "prettierd",
+		args = {vim.api.nvim_buf_get_name(0)},
 		stdin = true,
 	})
 end
