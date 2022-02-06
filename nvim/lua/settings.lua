@@ -31,7 +31,7 @@ function M.apply()
 	vim.opt.splitright = true
 
 	-- Timing
-	vim.opt.timeoutlen = 300
+	vim.opt.timeoutlen = 1000
 	vim.opt.updatetime = 300
 	vim.opt.ttimeoutlen = 10
 
