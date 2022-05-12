@@ -10,107 +10,115 @@ local configure_mappings = function()
 	kmap("n", "<leader>f", ":Format<CR>")
 end
 
-local function fmt(args)
+M.prettierd = function()
+	return {
+		exe = "prettierd",
+		args = { vim.api.nvim_buf_get_name(0) },
+		stdin = true,
+	}
+end
+
+M.prettier = function(options)
 	return function()
-		return args
+		return {
+			exe = "pretier",
+			args = vim.tbl_flatten({ "--stdin-filepath", vim.api.nvim_buf_get_name(0), options or {} }),
+			stdin = true,
+			try_node_modules = true,
+		}
 	end
 end
 
-M.prettier = function(opts)
-	return fmt({
-		exe = "prettierd",
-		args = {vim.api.nvim_buf_get_name(0)},
+M.clang = function()
+	return {
+		exe = "clang-format",
+		args = { "-assume-filename=" .. vim.fn.expand("%:t") },
 		stdin = true,
-	})
+	}
 end
 
-M.clang = fmt({
-	exe = "clang-format",
-	args = {
-		"-assume-filename=" .. vim.fn.expand("%:t"),
-		[[
-        -style='{IndentWidth: 4,
-        AlignConsecutiveAssignments: true,
-        AllowShortBlocksOnASingleLine: Empty,
-        AllowShortLoopsOnASingleLine: true,
-        AllowShortIfStatementsOnASingleLine: true,
-        AlignConsecutiveMacros: true,
-        BreakBeforeBraces: Linux,
-        AlignConsecutiveDeclarations: true,
-        AlwaysBreakAfterReturnType: None}'
-        ]],
-	},
-	stdin = true,
-})
+M.stylua = function()
+	return {
+		exe = "stylua",
+		args = { "--search-parent-directories", "--stdin-filepath", '"%:p"', "--", "-" },
+		stdin = true,
+	}
+end
 
-M.stylua = fmt({
-	exe = "stylua",
-	args = { "--search-parent-directories", "--stdin-filepath", '"%:p"', "--", "-" },
-	stdin = true,
-})
+M.sh = function()
+	return {
+		exe = "shfmt",
+		args = { "-i " .. vim.opt.shiftwidth:get() },
+		stdin = true,
+	}
+end
 
-M.sh = fmt({
-	exe = "shfmt",
-	args = { "-i " .. vim.opt.shiftwidth:get() },
-	stdin = true,
-})
+M.black = function()
+	return {
+		exe = "black",
+		args = { "--quiet", "-" },
+		stdin = true,
+	}
+end
 
-M.black = fmt({
-	exe = "black",
-	args = { "--quiet", "-" },
-	stdin = true,
-})
+M.goimports = function()
+	return {
+		exe = "goimports",
+		stdin = true,
+	}
+end
 
-M.goimports = fmt({
-	exe = "goimports",
-	stdin = true,
-})
+M.rustfmt = function()
+	return {
+		exe = "rustfmt",
+		args = {
+			string.format("--config hard_tabs=%s,tab_spaces=%s", not vim.opt.expandtab:get(), vim.opt.shiftwidth:get()),
+		},
+		stdin = true,
+	}
+end
 
-M.rustfmt = fmt({
-	exe = "rustfmt",
-	args = {
-		string.format("--config hard_tabs=%s,tab_spaces=%s", not vim.opt.expandtab:get(), vim.opt.shiftwidth:get()),
-	},
-	stdin = true,
-})
+M.latex = function()
+	return {
+		exe = "latexindent",
+		args = { "-g /dev/stderr", "2>/dev/null" },
+		stdin = true,
+	}
+end
 
-M.latex = fmt({
-	exe = "latexindent",
-	args = { "-g /dev/stderr", "2>/dev/null" },
-	stdin = true,
-})
-
-M.swift = fmt({
-  exe = "swiftformat",
-  args = { "--output stdout" },
-  stdin = true
-})
+M.swift = function()
+	return {
+		exe = "swift-format",
+		args = { "format", vim.api.nvim_buf_get_name(0) },
+		stdin = true,
+	}
+end
 
 local config = {
-		logging = false,
-		filetype = {
-			sh = { M.sh },
-			zsh = { M.sh },
-			c = { M.clang },
-			cs = { M.clang },
-			cpp = { M.clang },
-			lua = { M.stylua },
-			tex = { M.latex },
-      swift = { M.swift },
-			python = { M.black },
-			go = { M.goimports },
-			rust = { M.rustfmt },
-			css = { M.prettier("--parser css") },
-			xml = { M.prettier() },
-			json = { M.prettier() },
-			html = { M.prettier("--parser html") },
-			scss = { M.prettier() },
-			markdown = { M.prettier() },
-			javascript = { M.prettier({ "--single-quote" }) },
-			typescript = { M.prettier({ "--single-quote" }) },
-			javascriptreact = { M.prettier({ "--single-quote" }) },
-			typescriptreact = { M.prettier({ "--single-quote" }) },
-    }
+	logging = false,
+	filetype = {
+		sh = { M.sh },
+		zsh = { M.sh },
+		c = { M.clang },
+		cs = { M.clang },
+		cpp = { M.clang },
+		lua = { M.stylua },
+		tex = { M.latex },
+		swift = { M.swift },
+		python = { M.black },
+		go = { M.goimports },
+		rust = { M.rustfmt },
+		css = { M.prettier("--parser css") },
+		xml = { M.prettier() },
+		json = { M.prettier() },
+		html = { M.prettier("--parser html") },
+		scss = { M.prettier() },
+		markdown = { M.prettier() },
+		javascript = { M.prettierd },
+		typescript = { M.prettierd },
+		javascriptreact = { M.prettierd },
+		typescriptreact = { M.prettierd },
+	},
 }
 
 M.setup = function()

@@ -67,9 +67,9 @@ M.setup = function()
 				return item
 			end,
 		},
-		documentation = {
-			border = "rounded",
-		},
+    window = {
+		  documentation = cmp.config.window.bordered(),
+    },
 		sources = {
 			{ name = "nvim_lsp" },
 			{ name = "luasnip" },
