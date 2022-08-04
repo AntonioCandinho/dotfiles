@@ -58,11 +58,12 @@ local on_packer_start = function(use)
 
 	-- UI
 	use({
-		"rafamadriz/themes.nvim",
+		"sainnhe/gruvbox-material",
 		config = function()
-			vim.cmd("colorscheme gruvbox")
+			vim.cmd("colorscheme gruvbox-material")
 		end,
 	})
+
 	use({
 		"nvim-lualine/lualine.nvim",
 		config = function()
@@ -110,15 +111,13 @@ local on_packer_start = function(use)
 		end,
 	})
 
-
-  -- File manager
-  use({
-    'kevinhwang91/rnvimr',
-    config = function ()
-      require("packages.file-manager").setup()
-    end
-  })
-
+	-- File manager
+	use({
+		"kevinhwang91/rnvimr",
+		config = function()
+			require("packages.file-manager").setup()
+		end,
+	})
 end
 
 local install_pack_if_needed = function()
