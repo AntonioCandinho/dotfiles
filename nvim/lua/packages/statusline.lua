@@ -1,11 +1,10 @@
-local theme = require "lualine.themes.gruvbox"
 local lualine = require "lualine"
 local M = {}
 
 local config = {
   options = {
     icons_enabled = false,
-    theme = theme,
+    theme = "gruvbox-material",
   },
   tabline = {
     lualine_a = { "buffers" },
