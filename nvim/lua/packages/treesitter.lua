@@ -9,6 +9,7 @@ local config = {
 	},
 	indent = { enable = false },
 	autopairs = { enable = true },
+	playground = { enable = true },
 }
 
 M.setup = function()

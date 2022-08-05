@@ -50,7 +50,7 @@ local on_packer_start = function(use)
 	})
 	use({
 		"nvim-telescope/telescope.nvim",
-		requires = { { "nvim-lua/plenary.nvim" } },
+		requires = { "nvim-lua/plenary.nvim" },
 		config = function()
 			require("packages.telescope").setup()
 		end,
@@ -79,6 +79,11 @@ local on_packer_start = function(use)
 		config = function()
 			require("packages.treesitter").setup()
 		end,
+	})
+
+	use({
+		"nvim-treesitter/playground",
+		after = "nvim-treesitter",
 	})
 
 	-- Formatter
