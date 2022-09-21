@@ -10,10 +10,15 @@ local configure_mappings = function()
   kmap("n", "<leader>f", ":Format<CR>")
 end
 
+local get_current_file_name = function()
+  local file_name = vim.api.nvim_buf_get_name(0)
+  return vim.fn.fnameescape(file_name)
+end
+
 M.prettierd = function()
   return {
     exe = "prettierd",
-    args = { vim.api.nvim_buf_get_name(0) },
+    args = { get_current_file_name() },
     stdin = true,
   }
 end
@@ -22,7 +27,7 @@ M.prettier = function(options)
   return function()
     return {
       exe = "pretier",
-      args = vim.tbl_flatten { "--stdin-filepath", vim.api.nvim_buf_get_name(0), options or {} },
+      args = vim.tbl_flatten { "--stdin-filepath", get_current_file_name(), options or {} },
       stdin = true,
       try_node_modules = true,
     }
@@ -40,7 +45,13 @@ end
 M.stylua = function()
   return {
     exe = "stylua",
-    args = { "--search-parent-directories", "--stdin-filepath", vim.api.nvim_buf_get_name(0), "--", "-" },
+    args = {
+      "--search-parent-directories",
+      "--stdin-filepath",
+      get_current_file_name(),
+      "--",
+      "-",
+    },
     stdin = true,
   }
 end
@@ -93,13 +104,21 @@ end
 M.swift = function()
   return {
     exe = "swift-format",
-    args = { "format", vim.api.nvim_buf_get_name(0) },
+    args = { "format", get_current_file_name() },
+    stdin = true,
+  }
+end
+
+M.xmllint = function()
+  return {
+    exe = "xmllint",
+    args = { "--format", get_current_file_name()},
     stdin = true,
   }
 end
 
 local config = {
-  logging = false,
+  logging = true,
   filetype = {
     sh = { M.sh },
     zsh = { M.sh },
@@ -113,7 +132,7 @@ local config = {
     go = { M.goimports },
     rust = { M.rustfmt },
     css = { M.prettier "--parser css" },
-    xml = { M.prettier() },
+    xml = { M.xmllint },
     json = { M.prettier() },
     html = { M.prettier "--parser html" },
     scss = { M.prettier() },
