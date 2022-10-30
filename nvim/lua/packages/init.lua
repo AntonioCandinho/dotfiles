@@ -6,11 +6,15 @@ local on_packer_start = function(use)
 
   -- LSP configuration
   use { "ray-x/lsp_signature.nvim" }
-  use { "neovim/nvim-lspconfig" }
   use {
-    "williamboman/nvim-lsp-installer",
-    event = "BufReadPre",
-    after = "nvim-lspconfig",
+    "williamboman/mason.nvim",
+    config = function()
+      require("mason").setup()
+    end,
+  }
+  use { "williamboman/mason-lspconfig.nvim" }
+  use {
+    "neovim/nvim-lspconfig",
     config = function()
       require("packages.lsp").setup()
     end,

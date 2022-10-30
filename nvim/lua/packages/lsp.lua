@@ -1,5 +1,6 @@
-local lsp_installer = require "nvim-lsp-installer"
+local mason_lspconfig = require "mason-lspconfig"
 local lsp_signature = require "lsp_signature"
+local lspconfig = require "lspconfig"
 
 local M = {}
 
@@ -59,30 +60,49 @@ local get_lsp_server_config = function()
   }
 end
 
-local with_lua_lsp_config = function(server, opts)
-  if server.name ~= "sumneko_lua" then
-    return opts
-  end
+local setup_lspconfig = function()
+  local config = get_lsp_server_config()
+  local default_config = lspconfig.util.default_config
 
-  opts.settings = {
-    Lua = {
-      diagnostics = {
-        globals = { "vim" },
+  lspconfig.util.default_config = vim.tbl_extend("force", default_config, config)
+end
+
+local setup_sourcekit_lsp = function()
+  if vim.fn.executable "sourcekit-lsp" == 1 then
+    lspconfig.sourcekit.setup {}
+  end
+end
+
+local get_sumneko_lsp_config = function()
+  return {
+    settings = {
+      Lua = {
+        diagnostics = {
+          globals = { "vim" },
+        },
       },
     },
   }
+end
 
-  return opts
+local setup_mason = function()
+  mason_lspconfig.setup {
+    ensure_installed = { "sumneko_lua", "tsserver" },
+  }
+  mason_lspconfig.setup_handlers {
+    function(server_name)
+      lspconfig[server_name].setup {}
+    end,
+    ["sumneko_lua"] = function()
+      lspconfig.sumneko_lua.setup(get_sumneko_lsp_config())
+    end,
+  }
 end
 
 M.setup = function()
-  lsp_installer.on_server_ready(function(server)
-    local server_opts = get_lsp_server_config()
-    local lua_server_opts = with_lua_lsp_config(server, server_opts)
-    server:setup(lua_server_opts)
-
-    vim.cmd [[ do User LspAttachBuffers ]]
-  end)
+  setup_lspconfig()
+  setup_sourcekit_lsp()
+  setup_mason()
 end
 
 return M
