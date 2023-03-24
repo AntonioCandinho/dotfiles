@@ -6,36 +6,23 @@ local on_packer_start = function(use)
 
   -- LSP configuration
   use { "ray-x/lsp_signature.nvim" }
-  use {
-    "williamboman/mason.nvim",
-    config = function()
-      require("mason").setup()
-    end,
-  }
-  use { "williamboman/mason-lspconfig.nvim" }
-  use {
-    "neovim/nvim-lspconfig",
-    config = function()
-      require("packages.lsp").setup()
-    end,
-  }
+  use { "neovim/nvim-lspconfig" }
 
   -- Completion
+  use { "hrsh7th/nvim-cmp", event = "InsertEnter" }
+  use { "hrsh7th/cmp-path", after = "nvim-cmp" }
+  use { "hrsh7th/cmp-buffer", after = "nvim-cmp" }
+  use { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" }
   use {
-    "hrsh7th/nvim-cmp",
-    event = "InsertEnter",
-    requires = {
-      { "hrsh7th/cmp-path", after = "nvim-cmp" },
-      { "hrsh7th/cmp-buffer", after = "nvim-cmp" },
-      { "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" },
-      { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" },
-      { "f3fora/cmp-spell", after = "nvim-cmp" },
-      { "saadparwaiz1/cmp_luasnip", after = "LuaSnip" },
-    },
+    "hrsh7th/cmp-nvim-lsp",
+    after = "nvim-cmp",
     config = function()
       require("packages.cmp").setup()
     end,
   }
+  use { "f3fora/cmp-spell", after = "nvim-cmp" }
+  use { "saadparwaiz1/cmp_luasnip", after = "LuaSnip" }
+
   use {
     "L3MON4D3/LuaSnip",
     after = "nvim-cmp",

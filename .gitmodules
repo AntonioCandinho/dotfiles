@@ -1,0 +1,6 @@
+[submodule "lsp-servers/lua-language-server"]
+	path = lsp-servers/lua-language-server
+	url = https://github.com/LuaLS/lua-language-server
+[submodule "lsp-servers/sourcekit-lsp"]
+	path = lsp-servers/sourcekit-lsp
+	url = https://github.com/apple/sourcekit-lsp.git
