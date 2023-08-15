@@ -54,7 +54,7 @@ local configure_cmp = function()
   map("i", "<C-k>", "<cmd>lua require('luasnip').jump(-1)<Cr>", { silent = true })
 end
 
-local on_lsp_attach = function(client, bufnr)
+local on_lsp_attach = function(_, bufnr)
   local opts = { noremap = true, silent = true }
   local bmap = function(...)
     vim.api.nvim_buf_set_keymap(bufnr, ...)
@@ -99,6 +99,9 @@ local configure_lsp = function()
   lspconfig.bashls.setup {}
   lspconfig.tsserver.setup {}
   lspconfig.sourcekit.setup {}
+  lspconfig.cssls.setup {}
+  lspconfig.html.setup {}
+  lspconfig.eslint.setup {}
   lspconfig.lua_ls.setup {
     settings = {
       Lua = {

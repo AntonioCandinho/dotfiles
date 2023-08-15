@@ -1,0 +1,11 @@
+{
+  "name": "npm-available-servers",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "bash-language-server": "^5.0.0",
+    "typescript-language-server": "^3.3.2",
+    "vscode-langservers-extracted": "^4.7.0"
+  }
+}

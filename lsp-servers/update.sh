@@ -26,3 +26,12 @@ echo "🚧 Building sources..."
 
 echo "✅ Lua Language Server updated"
 popd > /dev/null
+
+
+echo "⚙️  Updating JS based language servers..."
+pushd npm-available-servers  > /dev/null
+
+yarn install > /dev/null
+
+echo "✅ JS based language servers updated"
+popd > /dev/null
