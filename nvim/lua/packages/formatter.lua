@@ -26,7 +26,7 @@ end
 M.prettier = function(options)
   return function()
     return {
-      exe = "pretier",
+      exe = "prettier",
       args = vim.tbl_flatten { "--stdin-filepath", get_current_file_name(), options or {} },
       stdin = true,
       try_node_modules = true,
