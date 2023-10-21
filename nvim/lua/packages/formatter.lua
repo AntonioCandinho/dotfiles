@@ -112,7 +112,7 @@ end
 M.xmllint = function()
   return {
     exe = "xmllint",
-    args = { "--format", get_current_file_name()},
+    args = { "--format", get_current_file_name() },
     stdin = true,
   }
 end
