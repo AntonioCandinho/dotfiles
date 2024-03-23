@@ -15,21 +15,12 @@ local get_current_file_name = function()
   return vim.fn.fnameescape(file_name)
 end
 
-M.prettierd = function()
-  return {
-    exe = "prettierd",
-    args = { get_current_file_name() },
-    stdin = true,
-  }
-end
-
 M.prettier = function(options)
   return function()
     return {
-      exe = "prettier",
+      exe = "bunx prettier",
       args = vim.tbl_flatten { "--stdin-filepath", get_current_file_name(), options or {} },
       stdin = true,
-      try_node_modules = true,
     }
   end
 end
@@ -137,10 +128,10 @@ local config = {
     html = { M.prettier "--parser html" },
     scss = { M.prettier() },
     markdown = { M.prettier() },
-    javascript = { M.prettierd },
-    typescript = { M.prettierd },
-    javascriptreact = { M.prettierd },
-    typescriptreact = { M.prettierd },
+    javascript = { M.prettier() },
+    typescript = { M.prettier() },
+    javascriptreact = { M.prettier() },
+    typescriptreact = { M.prettier() },
   },
 }
 
