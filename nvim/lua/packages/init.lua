@@ -110,6 +110,17 @@ local get_packages = function()
       end,
     },
 
+    -- Copilot
+    {
+      "zbirenbaum/copilot.lua",
+      cmd = "Copilot",
+      build = ":Copilot auth",
+      event = "InsertEnter",
+      config = function()
+        require("packages.copilot").setup()
+      end,
+    },
+
     -- Navigation
     {
       "nvim-telescope/telescope.nvim",
