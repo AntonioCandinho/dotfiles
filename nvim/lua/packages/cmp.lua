@@ -95,7 +95,12 @@ local configure_lsp = function()
 
   lspconfig.bashls.setup {}
   lspconfig.tsserver.setup {}
-  lspconfig.sourcekit.setup {}
+  lspconfig.sourcekit.setup {
+    root_dir = function(fname)
+      return lspconfig.util.root_pattern("Package.swift", "*.xcodeproj", "*.xcworkspace")(fname)
+        or lspconfig.util.path.dirname(fname)
+    end,
+  }
   lspconfig.cssls.setup {}
   lspconfig.html.setup {}
   lspconfig.eslint.setup {}
