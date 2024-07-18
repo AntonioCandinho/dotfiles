@@ -180,6 +180,13 @@ local get_packages = function()
       end,
     },
 
+    -- Rust tools
+    {
+      "mrcjkb/rustaceanvim",
+      version = "^4", -- Recommended
+      lazy = false, -- This plugin is already lazy
+    },
+
     -- Utils
     {
       "moll/vim-bbye",
