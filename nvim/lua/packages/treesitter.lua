@@ -58,7 +58,6 @@ local config = {
     "objc",
     "objdump",
     "ocaml",
-    "ocaml_interface",
     "ocamllex",
     "pascal",
     "perl",
