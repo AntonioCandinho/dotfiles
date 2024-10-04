@@ -92,10 +92,10 @@ local configure_lsp = function()
   local default_config = lspconfig.util.default_config
 
   lspconfig.util.default_config = vim.tbl_extend("force", default_config, config)
-
   lspconfig.bashls.setup {}
-  lspconfig.tsserver.setup {}
+  lspconfig.ts_ls.setup {}
   lspconfig.sourcekit.setup {
+    cmd = { "sourcekit-lsp" },
     root_dir = function(fname)
       return lspconfig.util.root_pattern("Package.swift", "*.xcodeproj", "*.xcworkspace")(fname)
         or lspconfig.util.path.dirname(fname)
