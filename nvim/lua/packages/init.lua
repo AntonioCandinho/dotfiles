@@ -48,14 +48,7 @@ local get_packages = function()
     },
 
     -- LSP setup
-    {
-      "neovim/nvim-lspconfig",
-      event = { "BufReadPre", "BufNewFile" },
-      dependencies = {
-        { "cmp-nvim-lsp" },
-        { "ray-x/lsp_signature.nvim" },
-      },
-    },
+    require "packages.lsp",
 
     -- Treesitter
     {
@@ -66,6 +59,7 @@ local get_packages = function()
         require("packages.treesitter").setup()
       end,
     },
+
     -- Treesitter playground
     {
       "nvim-treesitter/playground",
@@ -76,39 +70,7 @@ local get_packages = function()
     },
 
     -- Completion
-    {
-      "hrsh7th/nvim-cmp",
-      keys = { ":" },
-      event = "InsertEnter",
-      dependencies = {
-        "hrsh7th/cmp-path",
-        "hrsh7th/cmp-buffer",
-        "hrsh7th/cmp-nvim-lua",
-        "hrsh7th/cmp-nvim-lsp",
-        "f3fora/cmp-spell",
-        {
-          "saadparwaiz1/cmp_luasnip",
-          dependencies = {
-            "L3MON4D3/LuaSnip",
-          },
-        },
-      },
-      config = function()
-        require("packages.cmp").setup()
-      end,
-    },
-
-    -- Snippets integration for cmp
-    {
-      "L3MON4D3/LuaSnip",
-      event = { "InsertEnter" },
-      config = function()
-        require("luasnip").config.set_config {
-          history = true,
-        }
-        require("luasnip.loaders.from_vscode").load {}
-      end,
-    },
+    require "packages.completion",
 
     -- Copilot
     {
