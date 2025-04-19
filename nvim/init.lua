@@ -1,5 +1,5 @@
-local packages = require "packages"
+local plugins = require "plugins"
 local settings = require "settings"
 
 settings.apply()
-packages.setup()
+plugins.setup()

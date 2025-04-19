@@ -24,12 +24,12 @@ M.setup = function()
   local current_path = debug.getinfo(1).source:match "@?(.*/)"
   get_or_create_lazy().setup {
     spec = {
-      require "packages.ui",
-      require "packages.treesitter",
-      require "packages.completion",
-      require "packages.formatter",
-      require "packages.navigation",
-      require "packages.ai",
+      require "plugins.ui",
+      require "plugins.treesitter",
+      require "plugins.completion",
+      require "plugins.formatter",
+      require "plugins.navigation",
+      require "plugins.ai",
     },
     defaults = {
       lazy = true,
