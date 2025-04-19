@@ -102,7 +102,9 @@ return {
     "nvim-treesitter/nvim-treesitter",
     lazy = false,
     build = ":TSUpdate",
-    options = options,
+    config = function()
+      return options
+    end,
   },
 
   -- Treesitter playground
