@@ -1,7 +1,4 @@
-local treesitter = require "nvim-treesitter.configs"
-local M = {}
-
-local config = {
+local options = {
   ensure_installed = {
     "awk",
     "bash",
@@ -100,8 +97,20 @@ local config = {
   playground = { enable = true },
 }
 
-M.setup = function()
-  treesitter.setup(config)
-end
+return {
+  {
+    "nvim-treesitter/nvim-treesitter",
+    lazy = false,
+    build = ":TSUpdate",
+    options = options,
+  },
 
-return M
+  -- Treesitter playground
+  {
+    "nvim-treesitter/playground",
+    cmd = { "TSPlaygroundToggle" },
+    dependencies = {
+      "nvim-treesitter",
+    },
+  },
+}

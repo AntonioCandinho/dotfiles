@@ -1,14 +1,4 @@
-local formatter = require "formatter"
 local M = {}
-
-local configure_mappings = function()
-  local map_opts = { noremap = true, silent = true }
-  local kmap = function(mode, key, result)
-    vim.api.nvim_set_keymap(mode, key, result, map_opts)
-  end
-
-  kmap("n", "<leader>f", ":Format<CR>")
-end
 
 local get_current_file_name = function()
   local file_name = vim.api.nvim_buf_get_name(0)
@@ -108,36 +98,40 @@ M.xmllint = function()
   }
 end
 
-local config = {
-  logging = true,
-  filetype = {
-    sh = { M.sh },
-    zsh = { M.sh },
-    c = { M.clang },
-    cs = { M.clang },
-    cpp = { M.clang },
-    lua = { M.stylua },
-    tex = { M.latex },
-    swift = { M.swift },
-    python = { M.black },
-    go = { M.goimports },
-    rust = { M.rustfmt },
-    css = { M.prettier "--parser css" },
-    xml = { M.xmllint },
-    json = { M.prettier() },
-    html = { M.prettier "--parser html" },
-    scss = { M.prettier() },
-    markdown = { M.prettier() },
-    javascript = { M.prettier() },
-    typescript = { M.prettier() },
-    javascriptreact = { M.prettier() },
-    typescriptreact = { M.prettier() },
+return {
+  {
+    "mhartington/formatter.nvim",
+    cmd = { "Format", "FormatWrite" },
+    keys = {
+      { "<leader>f", "<cmd>Format<CR>", desc = "Format sources" },
+    },
+    config = function()
+      require("formatter").setup {
+        logging = true,
+        filetype = {
+          sh = { M.sh },
+          zsh = { M.sh },
+          c = { M.clang },
+          cs = { M.clang },
+          cpp = { M.clang },
+          lua = { M.stylua },
+          tex = { M.latex },
+          swift = { M.swift },
+          python = { M.black },
+          go = { M.goimports },
+          rust = { M.rustfmt },
+          css = { M.prettier "--parser css" },
+          xml = { M.xmllint },
+          json = { M.prettier() },
+          html = { M.prettier "--parser html" },
+          scss = { M.prettier() },
+          markdown = { M.prettier() },
+          javascript = { M.prettier() },
+          typescript = { M.prettier() },
+          javascriptreact = { M.prettier() },
+          typescriptreact = { M.prettier() },
+        },
+      }
+    end,
   },
 }
-
-M.setup = function()
-  formatter.setup(config)
-  configure_mappings()
-end
-
-return M

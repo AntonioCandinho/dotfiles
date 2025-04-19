@@ -114,17 +114,6 @@ return {
     config = M.configure_blink_cmp(),
   },
 
-  -- Copilot
-  {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    build = ":Copilot auth",
-    event = "InsertEnter",
-    config = function()
-      require("packages.copilot").setup()
-    end,
-  },
-
   -- Rust tools
   {
     "mrcjkb/rustaceanvim",
