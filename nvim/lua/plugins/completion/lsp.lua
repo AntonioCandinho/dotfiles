@@ -70,6 +70,7 @@ return {
       bashls = {},
       sourcekit = {},
       clangd = {},
+      zls = {},
       vtsls = {
         -- explicitly add default filetypes, so that we can extend
         -- them in related extras

@@ -45,6 +45,14 @@ M.sh = function()
   }
 end
 
+M.zig = function()
+  return {
+    exe = "zig",
+    args = { "fmt --stdin" },
+    stdin = true,
+  }
+end
+
 M.black = function()
   return {
     exe = "black",
@@ -122,6 +130,7 @@ return {
           rust = { M.rustfmt },
           css = { M.prettier "--parser css" },
           xml = { M.xmllint },
+          zig = { M.zig },
           json = { M.prettier() },
           html = { M.prettier "--parser html" },
           scss = { M.prettier() },
