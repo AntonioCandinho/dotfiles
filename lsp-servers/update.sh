@@ -30,3 +30,18 @@ echo "✅ Latest sources downloaded"
 
 echo "🚧 Building sources..."
 cargo build --release
+
+echo "✅ Rust Analyzer updated"
+popd >/dev/null
+
+echo "⚙️  Updating ZLS..."
+pushd zls >/dev/null
+
+echo "⬇️  Downloading latests sources..."
+git pull >/dev/null
+echo "✅ Latest sources downloaded"
+
+echo "🚧 Building sources..."
+zig build -Doptimize=ReleaseSafe
+
+echo "✅ ZLS Analyzer updated"

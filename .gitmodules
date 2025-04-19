@@ -4,3 +4,6 @@
 [submodule "lsp-servers/rust-analyzer"]
 	path = lsp-servers/rust-analyzer
 	url = https://github.com/rust-lang/rust-analyzer.git
+[submodule "lsp-servers/zls"]
+	path = lsp-servers/zls
+	url = https://github.com/zigtools/zls
