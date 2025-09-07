@@ -21,22 +21,14 @@ local get_or_create_lazy = function()
 end
 
 M.setup = function()
-  local current_path = debug.getinfo(1).source:match "@?(.*/)"
   get_or_create_lazy().setup {
     spec = {
-      require "plugins.ui",
-      require "plugins.treesitter",
-      require "plugins.completion",
-      require "plugins.lsp",
-      require "plugins.formatter", 
-      require "plugins.navigation",
-      require "plugins.ai",
-      require "plugins.tools",
+      { import = "plugins" }
     },
     defaults = {
       lazy = true,
     },
-    lockfile = current_path .. "/lazy-lock.json",
+    lockfile = vim.fn.stdpath("config") .. "/lazy-lock.json",
   }
 end
 

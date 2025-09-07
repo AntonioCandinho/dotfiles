@@ -62,6 +62,7 @@ All LSP servers configured using native `vim.lsp.config()` and `vim.lsp.enable()
 - **Improved structure**: Moved to standard config/ directory organization
 - **Server management**: Added mason.nvim for automatic LSP server installation
 - **Auto-discovery**: Neovim automatically discovers and loads LSP configs from `lsp/` directory
+- **Lazy.nvim Standard**: Restructured plugins to follow lazy.nvim standard pattern with individual plugin files
 
 ## ⚠️ Testing Required
 
@@ -99,23 +100,26 @@ The following servers are available in `lsp-servers/` but may need path configur
 ```
 nvim/
 ├── init.lua                    # Entry point - loads all configurations
+├── lazy-lock.json              # Plugin version lock file ✅
 ├── lua/
 │   ├── config/                # Core configuration modules
 │   │   ├── settings.lua      # Core vim options and settings ✅
 │   │   ├── lsp.lua           # LSP loader/manager ✅
-│   │   └── autocmds.lua      # Autocommands and keymaps ✅
-│   └── plugins/               # Plugin specifications
-│       ├── init.lua          # Plugin manager setup ✅
-│       ├── ai.lua            # Copilot configuration ✅
-│       ├── completion/       # Completion engine setup
-│       │   ├── init.lua      # Completion module loader
-│       │   └── blink.lua     # blink.cmp configuration ✅
-│       ├── lsp.lua           # LSP-related plugins ✅
-│       ├── tools.lua         # Development tools (mason) ✅
-│       ├── formatter.lua     # Code formatting ✅
-│       ├── navigation.lua    # File/buffer navigation ✅
-│       ├── treesitter.lua    # Syntax highlighting ✅
-│       └── ui.lua            # Theme and statusline ✅
+│   │   ├── keymaps.lua       # Global keybindings ✅
+│   │   └── autocmds.lua      # Autocommands and events ✅
+│   ├── lazy-setup.lua        # Lazy.nvim setup with import spec ✅
+│   └── plugins/               # Individual plugin specifications (lazy.nvim standard)
+│       ├── copilot.lua       # GitHub Copilot ✅
+│       ├── copilot-chat.lua  # Copilot Chat ✅
+│       ├── blink-cmp.lua     # Completion engine ✅
+│       ├── gruvbox.lua       # Color theme ✅
+│       ├── lualine.lua       # Status line ✅
+│       ├── mason.lua         # LSP server manager ✅
+│       ├── lsp-signature.lua # LSP signature help ✅
+│       ├── fzf-lua.lua       # Fuzzy finder ✅
+│       ├── vim-bbye.lua      # Better buffer closing ✅
+│       ├── nvim-treesitter.lua # Syntax highlighting ✅
+│       └── formatter-nvim.lua # Code formatting ✅
 └── lsp/                       # Individual LSP server configurations (auto-discovered) ✅
     ├── lua_ls.lua            # Lua language server ✅
     ├── vtsls.lua             # TypeScript/JavaScript server ✅

@@ -35,14 +35,19 @@ nvim/
 ├── lazy-lock.json        # Plugin version lock file
 ├── lua/
 │   ├── config/           # Core configuration modules
-│   │   ├── settings.lua  # Core Neovim settings (moved here)
+│   │   ├── settings.lua  # Core Neovim settings
 │   │   ├── lsp.lua       # Native LSP loader/manager
-│   │   └── autocmds.lua  # Autocommands and keymaps
+│   │   ├── keymaps.lua   # Global keybindings
+│   │   └── autocmds.lua  # Autocommands and events
+│   ├── lazy-setup.lua    # Lazy.nvim setup with { import = "plugins" }
+│   └── plugins/          # Individual plugin specifications (lazy.nvim standard)
+│       ├── copilot.lua   # Individual plugin files
+│       └── ...           # Other plugin files
 ├── lsp/                  # Individual LSP server configs (auto-discovered)
 │   ├── lua_ls.lua        # Lua language server
 │   ├── vtsls.lua         # TypeScript language server
 │   └── ...               # Other server configs
-├── lua/plugins/          # Plugin specifications
+├── lazy-lock.json        # Plugin version lock file
 └── plugin/               # Plugin directory
 ```
 
@@ -96,6 +101,11 @@ nvim/
 ## Configuration Principles
 
 - **Performance First**: Optimize for startup time and responsiveness
+- **Native First**: Use Neovim's built-in capabilities before external plugins
+- **Lazy.nvim Standard**: Follow lazy.nvim conventions with individual plugin files
+- **Auto-Discovery**: Leverage automatic discovery for both plugins and LSP servers
 - **Consistency**: Uniform behavior across all supported languages
-- **Extensibility**: Easy to add new languages or modify existing support
+- **Extensibility**: Easy to add new languages or plugins by creating files
+- **Standard Structure**: Follow conventional Neovim configuration organization
 - **Documentation**: Well-commented configuration for maintainability
+- **Automatic Management**: Use mason.nvim for seamless LSP server installation

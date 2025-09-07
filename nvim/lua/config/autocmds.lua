@@ -89,6 +89,18 @@ function M.setup()
       end
     end,
   })
+
+  -- LSP setup
+  local lsp_group = augroup("LspSetup", { clear = true })
+
+  -- Initialize native LSP after plugins are loaded
+  autocmd("User", {
+    group = lsp_group,
+    pattern = "VeryLazy",
+    callback = function()
+      require("config.lsp").setup()
+    end,
+  })
 end
 
 return M

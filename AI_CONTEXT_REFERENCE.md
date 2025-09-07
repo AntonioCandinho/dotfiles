@@ -35,15 +35,23 @@
 ├── nvim/lua/config/                       # Core configuration modules
 │   ├── settings.lua                      # Core vim settings (moved from lua/)
 │   ├── lsp.lua                           # LSP loader/manager
-│   └── autocmds.lua                      # Autocommands & keymaps
+│   └── autocmds.lua                      # Autocommands, keymaps & LSP initialization
 ├── nvim/lsp/                              # Individual LSP server configs (auto-discovered)
 │   ├── lua_ls.lua                        # Lua language server
 │   ├── vtsls.lua                         # TypeScript language server
 │   ├── sourcekit.lua                     # Swift language server
 │   └── ...                               # Other server configs
-├── nvim/lua/plugins/                      # Plugin specifications
-├── lsp-servers/                           # Available LSP servers
-└── [PROJECT_DOCS]                         # AI context files
+├── nvim/lua/
+│   ├── lazy-setup.lua                    # Lazy.nvim setup with import spec
+│   └── plugins/                          # Individual plugin specifications (lazy.nvim standard)
+│       ├── copilot.lua                   # GitHub Copilot plugin
+│       ├── blink-cmp.lua                 # Completion engine
+│       ├── gruvbox.lua                   # Color theme
+│       ├── mason.lua                     # LSP server manager
+│       └── ...                           # Other individual plugin files
+├── nvim/lazy-lock.json                   # Plugin version lock file
+├── lsp-servers/                          # Available LSP servers
+└── [PROJECT_DOCS]                        # AI context files
 ```
 
 ## LSP Server Status Matrix (Native Configuration)
@@ -66,6 +74,7 @@
 
 - **Add LSP Server**: Create `nvim/lsp/server_name.lua` (automatically discovered by Neovim)
 - **Modify LSP Server**: Edit individual file in `nvim/lsp/server_name.lua`
+- **Add Plugin**: Create `nvim/lua/plugins/plugin-name.lua` (automatically imported by lazy.nvim)
 - **Plugin Changes**: Use `:Lazy` command to manage
 - **Install Servers**: Use `:Mason` command or automatic mason.nvim installation
 - **Check LSP**: Use `:LspInfo` and `:checkhealth`
@@ -73,7 +82,8 @@
 - **Performance**: Configuration prioritizes lazy loading and startup speed
 - **Native LSP**: Uses Neovim v0.11+ `vim.lsp.config()` and `vim.lsp.enable()`
 - **Auto-Discovery**: Neovim automatically discovers LSP configs from `lsp/` directory
-- **Modular Structure**: Each LSP server has its own config file for maintainability
+- **Lazy.nvim Standard**: Uses `{ import = "plugins" }` pattern for automatic plugin discovery
+- **Modular Structure**: Each LSP server and plugin has its own config file for maintainability
 
 ## Documentation Links
 
