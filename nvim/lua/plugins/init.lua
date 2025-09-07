@@ -27,9 +27,11 @@ M.setup = function()
       require "plugins.ui",
       require "plugins.treesitter",
       require "plugins.completion",
-      require "plugins.formatter",
+      require "plugins.lsp",
+      require "plugins.formatter", 
       require "plugins.navigation",
       require "plugins.ai",
+      require "plugins.tools",
     },
     defaults = {
       lazy = true,

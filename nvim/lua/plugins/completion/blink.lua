@@ -3,8 +3,7 @@ return {
     "saghen/blink.cmp",
     dependencies = { "mikavilpas/blink-ripgrep.nvim", "ribru17/blink-cmp-spell" },
     version = "1.*",
-    config = function()
-      return {
+    opts = {
         completion = {
           documentation = { auto_show = true },
           keyword = { range = "full" },
@@ -56,7 +55,6 @@ return {
             },
           },
         },
-      }
-    end,
+    },
   },
 }
