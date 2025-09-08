@@ -45,7 +45,35 @@ return {
         },
       },
     },
-    keymap = { preset = "super-tab" },
+    keymap = {
+      preset = "default",
+      ["<Tab>"] = {
+        function(cmp)
+          -- Check if Copilot has a suggestion
+          local copilot_suggestion = require("copilot.suggestion")
+          if copilot_suggestion.is_visible() then
+            copilot_suggestion.accept()
+          elseif cmp.snippet_active() then
+            return cmp.accept()
+          elseif cmp.is_visible() then
+            return cmp.select_next()
+          else
+            return false
+          end
+        end,
+        "snippet_forward",
+        "fallback"
+      },
+      ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
+      ["<CR>"] = { "accept", "fallback" },
+      ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
+      ["<C-e>"] = { "hide", "fallback" },
+      ["<C-y>"] = { "select_and_accept" },
+      ["<C-p>"] = { "select_prev", "fallback" },
+      ["<C-n>"] = { "select_next", "fallback" },
+      ["<C-b>"] = { "scroll_documentation_up", "fallback" },
+      ["<C-f>"] = { "scroll_documentation_down", "fallback" },
+    },
     appearance = {
       use_nvim_cmp_as_default = true,
       nerd_font_variant = "mono",

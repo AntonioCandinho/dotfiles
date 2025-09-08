@@ -72,23 +72,6 @@ function M.setup()
     end,
   })
 
-  -- LSP-related autocmds
-  local lsp_group = augroup("LspFormatting", { clear = true })
-
-  -- Format on save (if client supports it)
-  autocmd("BufWritePre", {
-    group = lsp_group,
-    callback = function()
-      -- Only format if there's an LSP client attached that supports formatting
-      local clients = vim.lsp.get_clients({ bufnr = 0 })
-      for _, client in ipairs(clients) do
-        if client.supports_method("textDocument/formatting") then
-          vim.lsp.buf.format({ async = false })
-          break
-        end
-      end
-    end,
-  })
 
   -- LSP setup
   local lsp_group = augroup("LspSetup", { clear = true })

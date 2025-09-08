@@ -5,6 +5,34 @@ function M.setup()
   -- Set leader key (this is done in settings.lua but keeping reference)
   vim.g.mapleader = " "
 
+  -- Fix Alt key handling in terminal (especially Kitty on macOS)
+  -- Map escape sequences to Alt combinations
+  local function setup_alt_keys()
+    local chars = 'abcdefghijklmnopqrstuvwxyz'
+    for i = 1, #chars do
+      local c = chars:sub(i, i)
+      local key = string.format('<A-%s>', c)
+      local esc_seq = string.format('\\<Esc>%s', c)
+      vim.keymap.set('i', esc_seq, key, { expr = true })
+      vim.keymap.set('n', esc_seq, key, { expr = true })
+    end
+    
+    -- Special characters that might be used with Alt
+    local special_chars = { '\\', 'j', 'k', 'l' }
+    for _, c in ipairs(special_chars) do
+      local key = string.format('<A-%s>', c)
+      local esc_seq = string.format('\\<Esc>%s', c)
+      vim.keymap.set('i', esc_seq, key, { expr = true })
+      vim.keymap.set('n', esc_seq, key, { expr = true })
+    end
+  end
+
+  setup_alt_keys()
+
+  -- Set timeouts for Alt key recognition
+  vim.opt.timeout = true
+  vim.opt.ttimeoutlen = 50
+
   -- General keymaps
   local map = vim.keymap.set
 
@@ -43,6 +71,7 @@ function M.setup()
 
   -- Quit
   map("n", "<leader>q", "<cmd>q<cr>", { desc = "Quit" })
+
 end
 
 return M

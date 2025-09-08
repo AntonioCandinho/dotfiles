@@ -92,8 +92,8 @@ end
 
 M.swift = function()
   return {
-    exe = "swiftformat",
-    args = { "stdin", "--stdinpath", get_current_file_name() },
+    exe = "SwiftFormat",
+    args = { "--stdinpath", get_current_file_name() },
     stdin = true,
   }
 end
