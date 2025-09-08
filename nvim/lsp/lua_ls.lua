@@ -17,8 +17,8 @@ return {
       doc = {
         privateName = { "^_" },
       },
-      diagnostics = { 
-        globals = { "vim" } 
+      diagnostics = {
+        globals = { "vim" }
       },
       hint = {
         enable = true,

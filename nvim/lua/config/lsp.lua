@@ -61,20 +61,81 @@ end
 
 -- Configure diagnostic display
 local function setup_diagnostics()
+  -- Define diagnostic signs
+  local signs = {
+    Error = "󰅚 ",
+    Warn = "󰀪 ",
+    Hint = "󰌶 ",
+    Info = "󰋽 "
+  }
+
+  for type, icon in pairs(signs) do
+    local hl = "DiagnosticSign" .. type
+    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+  end
+
   vim.diagnostic.config {
     underline = true,
     update_in_insert = false,
     virtual_text = {
       spacing = 4,
       source = "if_many",
-      prefix = "●",
+      prefix = function(diagnostic)
+        local icons = {
+          [vim.diagnostic.severity.ERROR] = "󰅚",
+          [vim.diagnostic.severity.WARN] = "󰀪", 
+          [vim.diagnostic.severity.INFO] = "󰋽",
+          [vim.diagnostic.severity.HINT] = "󰌶",
+        }
+        return icons[diagnostic.severity] .. " "
+      end,
+      format = function(diagnostic)
+        return string.format("%s (%s)", diagnostic.message, diagnostic.source)
+      end,
     },
     severity_sort = true,
+    float = {
+      focusable = false,
+      style = "minimal",
+      border = "rounded",
+      source = "always",
+      header = "",
+      prefix = "",
+      suffix = "",
+      format = function(diagnostic)
+        return string.format("%s (%s) [%s]", 
+          diagnostic.message, 
+          diagnostic.source,
+          vim.diagnostic.severity[diagnostic.severity]:lower())
+      end,
+    },
   }
+
+  -- Enhanced hover and signature help with borders
+  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+    border = "rounded",
+    title = "Hover",
+    max_width = 80,
+    max_height = 20,
+  })
+
+  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+    border = "rounded",
+    title = "Signature Help",
+    max_width = 80,
+    max_height = 15,
+  })
   
-  -- Configure inlay hints
+  -- Configure inlay hints with better styling
   if vim.fn.has('nvim-0.10') == 1 then
     vim.lsp.inlay_hint.enable(true, { bufnr = 0 })
+    
+    -- Set better colors for inlay hints
+    vim.api.nvim_set_hl(0, 'LspInlayHint', {
+      fg = '#6c7086',  -- Catppuccin overlay0
+      bg = 'NONE',
+      italic = true,
+    })
   end
 end
 

@@ -59,8 +59,12 @@ function M.apply()
   vim.opt.pumheight = 10 -- Items to show when completing
   vim.opt.completeopt = "menuone,noinsert,noselect"
 
-  -- Disable not needed stuff
-  vim.g.loaded_gzip = 1
+  -- Command line settings - ensure status line shows properly
+  vim.opt.cmdheight = 0 -- Give space for command line and status line
+  vim.opt.showcmd = true -- Show (partial) command in the last line of the screen
+  vim.opt.laststatus = 3 -- Always show status line (global status line)
+
+  -- .g.loaded_gzip = 1
   vim.g.loaded_tar = 1
   vim.g.loaded_tarPlugin = 1
   vim.g.loaded_zip = 1
