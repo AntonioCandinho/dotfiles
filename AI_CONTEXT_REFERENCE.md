@@ -11,20 +11,19 @@
 ## User Requirements (Critical)
 
 - **Configuration Language**: Lua only
-- **Supported Languages**: Swift, JavaScript, TypeScript, HTML, React, Vue, Zig, Rust, C, C++
+- **Supported Languages**: Swift, JavaScript, TypeScript, HTML, CSS, React, Vue, Zig, Rust, C, C++
 - **Required Features**: Code completion, formatting, highlighting for ALL languages
-- **AI Completion**: Must be integrated (currently using GitHub Copilot)
+- **No AI tooling by default**: Avoid background AI agents/completions for stability and performance
 - **Minimalism**: Keep configuration lean and focused
 
 ## Current State Quick Facts
 
 - ✅ **Plugin Manager**: lazy.nvim (configured)
-- ✅ **LSP**: Native Neovim v0.11+ LSP with 9/9 required servers
-- ✅ **Completion**: blink.cmp + GitHub Copilot + ripgrep
+- ✅ **LSP**: Native Neovim v0.11+ LSP (language-specific configs in `nvim/lsp/`)
+- ✅ **Completion**: blink.cmp (+ LSP, buffer, path, etc.)
 - ✅ **Highlighting**: nvim-treesitter
 - ✅ **Formatting**: formatter.nvim
-- ✅ **AI**: Copilot + CopilotChat (Claude model)
-- ✅ **Server Management**: mason.nvim for automatic installation
+- ✅ **Server Management**: mason.nvim for managing installations
 - ✅ **Structure**: Standard config/ directory organization
 
 ## Key File Locations
@@ -44,7 +43,6 @@
 ├── nvim/lua/
 │   ├── lazy-setup.lua                    # Lazy.nvim setup with import spec
 │   └── plugins/                          # Individual plugin specifications (lazy.nvim standard)
-│       ├── copilot.lua                   # GitHub Copilot plugin
 │       ├── blink-cmp.lua                 # Completion engine
 │       ├── gruvbox.lua                   # Color theme
 │       ├── mason.lua                     # LSP server manager

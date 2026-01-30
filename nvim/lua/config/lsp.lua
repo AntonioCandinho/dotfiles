@@ -126,13 +126,12 @@ local function setup_diagnostics()
     max_height = 15,
   })
   
-  -- Configure inlay hints with better styling
+  -- Inlay hints are useful but can add churn; keep them off by default.
   if vim.fn.has('nvim-0.10') == 1 then
-    vim.lsp.inlay_hint.enable(true, { bufnr = 0 })
-    
-    -- Set better colors for inlay hints
+    vim.lsp.inlay_hint.enable(false)
+
     vim.api.nvim_set_hl(0, 'LspInlayHint', {
-      fg = '#6c7086',  -- Catppuccin overlay0
+      fg = '#6c7086',
       bg = 'NONE',
       italic = true,
     })
@@ -160,7 +159,7 @@ function M.setup()
     end,
   })
 
-  -- Enable each server by name (configurations are auto-loaded from lsp/ directory)
+  -- Enable language servers (configs are auto-loaded from nvim/lsp/*.lua)
   vim.lsp.enable("lua_ls")
   vim.lsp.enable("vtsls")
   vim.lsp.enable("sourcekit")
@@ -168,6 +167,7 @@ function M.setup()
   vim.lsp.enable("zls")
   vim.lsp.enable("rust_analyzer")
   vim.lsp.enable("html")
+  vim.lsp.enable("cssls")
   vim.lsp.enable("volar")
   vim.lsp.enable("bashls")
 end

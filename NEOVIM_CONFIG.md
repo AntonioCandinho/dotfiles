@@ -4,28 +4,29 @@
 
 ### Language Support Matrix
 
-| Language   | Code Completion | Formatting  | Highlighting | LSP Server                 |
-| ---------- | --------------- | ----------- | ------------ | -------------------------- |
-| Swift      | ✅ Required     | ✅ Required | ✅ Required  | sourcekit-lsp              |
-| JavaScript | ✅ Required     | ✅ Required | ✅ Required  | typescript-language-server |
-| TypeScript | ✅ Required     | ✅ Required | ✅ Required  | typescript-language-server |
-| HTML       | ✅ Required     | ✅ Required | ✅ Required  | html-language-server       |
-| React      | ✅ Required     | ✅ Required | ✅ Required  | typescript-language-server |
-| Vue        | ✅ Required     | ✅ Required | ✅ Required  | vue-language-server        |
-| Zig        | ✅ Required     | ✅ Required | ✅ Required  | zls                        |
-| Rust       | ✅ Required     | ✅ Required | ✅ Required  | rust-analyzer              |
-| C          | ✅ Required     | ✅ Required | ✅ Required  | clangd                     |
-| C++        | ✅ Required     | ✅ Required | ✅ Required  | clangd                     |
-| Lua        | ✅ Required     | ✅ Required | ✅ Required  | lua-language-server        |
+| Language   | Code Completion | Formatting  | Highlighting | LSP Server           |
+| ---------- | --------------- | ----------- | ------------ | -------------------- |
+| Swift      | ✅ Required     | ✅ Required | ✅ Required  | sourcekit-lsp        |
+| JavaScript | ✅ Required     | ✅ Required | ✅ Required  | vtsls                |
+| TypeScript | ✅ Required     | ✅ Required | ✅ Required  | vtsls                |
+| HTML       | ✅ Required     | ✅ Required | ✅ Required  | html-language-server |
+| CSS/SCSS   | ✅ Required     | ✅ Required | ✅ Required  | css-language-server  |
+| React      | ✅ Required     | ✅ Required | ✅ Required  | vtsls                |
+| Vue        | ✅ Required     | ✅ Required | ✅ Required  | vue-language-server  |
+| Zig        | ✅ Required     | ✅ Required | ✅ Required  | zls                  |
+| Rust       | ✅ Required     | ✅ Required | ✅ Required  | rust-analyzer        |
+| C          | ✅ Required     | ✅ Required | ✅ Required  | clangd               |
+| C++        | ✅ Required     | ✅ Required | ✅ Required  | clangd               |
+| Lua        | ✅ Required     | ✅ Required | ✅ Required  | lua-language-server  |
 
 ### Core Features
 
-- **AI Completion**: Integrate AI-powered code completion (GitHub Copilot, codeium, or similar)
+- **No AI tooling by default**: Avoid background AI agents/completions for stability and performance
 - **Minimal Configuration**: Keep plugin count and complexity low
 - **Lua-based**: All configuration written in Lua
 - **Plugin Manager**: Using lazy.nvim for plugin management
 - **Native LSP**: Neovim v0.11+ native LSP support (no nvim-lspconfig dependency)
-- **Server Management**: mason.nvim for automatic LSP server installation
+- **Server Management**: mason.nvim for managing LSP server installation
 
 ### Current Structure
 
@@ -41,7 +42,7 @@ nvim/
 │   │   └── autocmds.lua  # Autocommands and events
 │   ├── lazy-setup.lua    # Lazy.nvim setup with { import = "plugins" }
 │   └── plugins/          # Individual plugin specifications (lazy.nvim standard)
-│       ├── copilot.lua   # Individual plugin files
+│       ├── blink-cmp.lua # Completion engine
 │       └── ...           # Other plugin files
 ├── lsp/                  # Individual LSP server configs (auto-discovered)
 │   ├── lua_ls.lua        # Lua language server
@@ -58,7 +59,6 @@ nvim/
    - **Native LSP**: Neovim v0.11+ built-in LSP support
    - **blink.cmp**: Modern completion engine
    - **mason.nvim**: LSP server management and installation
-   - **AI completion**: GitHub Copilot integration
 
 2. **Syntax & Highlighting**
 

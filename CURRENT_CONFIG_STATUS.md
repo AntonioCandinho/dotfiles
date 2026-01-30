@@ -26,10 +26,9 @@ All LSP servers configured using native `vim.lsp.config()` and `vim.lsp.enable()
 ### Code Completion
 
 - **Engine**: blink.cmp (modern alternative to nvim-cmp)
-- **AI Integration**: GitHub Copilot + CopilotChat ✅
 - **LSP Integration**: Native LSP completion support ✅
 - **Sources**: LSP, buffer, path, spell checking, ripgrep
-- **LSP Server Management**: mason.nvim for automatic server installation
+- **LSP Server Management**: mason.nvim for managing server installation
 
 ### Syntax Highlighting
 
@@ -72,7 +71,7 @@ All LSP servers configured using native `vim.lsp.config()` and `vim.lsp.enable()
 - **Vue Support**: Verify treesitter parser and LSP integration
 - **React**: Confirm JSX/TSX support works correctly
 - **Formatting**: Test formatter configurations for all languages
-- **AI Completion**: Verify Copilot integration with new LSP setup
+- **Completion**: Verify blink.cmp + LSP completion across languages
 
 ## 📁 Available LSP Servers
 
@@ -109,8 +108,6 @@ nvim/
 │   │   └── autocmds.lua      # Autocommands and events ✅
 │   ├── lazy-setup.lua        # Lazy.nvim setup with import spec ✅
 │   └── plugins/               # Individual plugin specifications (lazy.nvim standard)
-│       ├── copilot.lua       # GitHub Copilot ✅
-│       ├── copilot-chat.lua  # Copilot Chat ✅
 │       ├── blink-cmp.lua     # Completion engine ✅
 │       ├── gruvbox.lua       # Color theme ✅
 │       ├── lualine.lua       # Status line ✅

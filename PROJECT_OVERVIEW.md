@@ -28,6 +28,7 @@ dotfiles/
 - JavaScript
 - TypeScript
 - HTML
+- CSS
 - React
 - Vue
 - Zig
@@ -40,8 +41,8 @@ dotfiles/
 - Code completion across all languages
 - Consistent formatting
 - Syntax highlighting
-- AI-powered code completion
 - Language Server Protocol (LSP) integration
+- No AI tooling by default (stability/performance)
 
 ## LSP Servers Available
 
