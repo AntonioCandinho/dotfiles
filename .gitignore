@@ -2,3 +2,6 @@
 
 # Local OpenCode project data / user-managed symlinks
 .opencode/
+
+# OpenCode agent skills (visible)
+skills/**/.DS_Store

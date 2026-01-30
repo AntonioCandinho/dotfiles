@@ -29,15 +29,15 @@ Key paths:
 - `nvim/`: Neovim configuration (primary)
 - `kitty/`: Kitty configuration
 - `tmux/`: tmux configuration
-- `agents/`: Visible home for OpenCode-related assets
+- `skills/`: OpenCode agent skills (visible)
 
 OpenCode discovery:
 - This repo does not commit `.opencode/`.
 - If you want OpenCode to auto-discover skills from this repo, create a local symlink:
-  - `.opencode/skills -> ../agents/skills`
+  - `.opencode/skills -> ../skills`
 
 OpenCode skills:
-- Skills live at `agents/skills/<skill-name>/SKILL.md`.
+- Skills live at `skills/<skill-name>/SKILL.md`.
 - OpenCode expects `.opencode/skills/<skill-name>/SKILL.md`.
 
 # Neovim Architecture Notes
