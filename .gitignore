@@ -1,1 +1,4 @@
 **/packer_compiled.lua
+
+# Local OpenCode project data / user-managed symlinks
+.opencode/
