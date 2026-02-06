@@ -1,43 +1,68 @@
 ---
 name: swift-performance
 description: Write and review Swift code with a focus on measurable performance, memory behavior, and concurrency correctness.
-compatibility: opencode
+compatibility: claude-code, codex, opencode
 ---
 
 ## What I do
-- Produce Swift that is efficient, readable, and benchmark-friendly.
-- Review Swift code for algorithmic complexity, allocations, ARC churn, and concurrency hazards.
+
+- Write Swift that is fast, readable, and benchmark-friendly.
+- Review Swift for algorithmic complexity, allocations, ARC churn, and dispatch costs.
 - Prefer changes that are justified by likely hotspots or profiling evidence.
 
 ## Default assumptions
-- Prefer clarity first, then optimize obvious hot paths.
-- Avoid micro-optimizations unless the code is in a loop, parsing, rendering, networking pipelines, or called frequently.
-- If performance tradeoffs are ambiguous, propose 2 options and explain costs.
+
+- Favor clarity first, then optimize obvious hot paths.
+- Avoid micro-optimizations unless code is in tight loops or called frequently.
+- If tradeoffs are unclear, present 2 options with costs.
 
 ## Writing rules (performance-oriented Swift)
-- Choose the right data structure: Array vs ContiguousArray, Dictionary/Set, avoid repeated linear scans in hot loops.
-- Minimize allocations and copying:
-  - Preallocate with reserveCapacity(_:) when sizes are known or can be estimated.
-  - Avoid intermediate arrays from map/filter in hot paths; consider for loops or lazy when appropriate.
-  - Be careful with String/Substring lifetimes; avoid accidental retention of large buffers.
-- Control dynamic dispatch and ARC:
-  - Prefer struct for value semantics when it reduces heap allocations.
-  - Avoid capturing self strongly in long-lived closures; use [weak self] when needed (but don't cargo-cult it).
-- Concurrency:
-  - Use structured concurrency (async/await, task groups) and avoid data races.
-  - Avoid blocking threads; do not call sync I/O on main actor; keep actor hops minimal in tight loops.
-- Use @inlinable/@usableFromInline only for library boundaries and only when it helps; do not spam attributes.
-- Prefer measuring:
-  - Suggest Instruments (Time Profiler, Allocations), os_signpost, and XCTest performance tests where relevant.
+
+### Generics across module boundaries
+- If a public generic crosses a module boundary, call out specialization limits and potential performance impacts.
+- Prefer small, inlineable generics to reduce cross-module overhead.
+- Use `@_specialize` only as a last resort for hot generics that must remain public.
+
+### Structs and classes
+
+- Use `private` or `fileprivate` wherever possible.
+- Mark types `final` when inheritance is not required to avoid dynamic dispatch.
+- Prefer in-place mutation over creating new objects when safe and clear.
+- Prefer `struct` for trivial value types; use `class` only when reference semantics are required.
+- Be careful with large, non-trivial structs: copies can be expensive due to malloc/free and ARC overhead.
+- For large, non-trivial data, consider copy-on-write; use a `Guts` reference type to hold shared storage.
+- When conforming to protocols, consider the Value Witness Table and the inline buffer (3 words) in performance-sensitive paths.
+
+### Closures
+
+- Avoid capturing `var` in closures; it triggers heap allocation.
+- If a capturing closure is defined inside a function, consider `@inline(__always)` to remove overhead when appropriate.
+
+### Data structures and algorithms
+
+- Prefer `ContiguousArray` over `Array` for reference types to reduce unnecessary `NSArray` bridging.
+- Call `reserveCapacity(_:)` when size is known or can be estimated.
+- Avoid chaining `map`/`filter`/`reduce` without `lazy`; it creates intermediate arrays.
+- Prefer plain `for` loops over lazy chaining in hot paths.
+- Avoid `reduce(into:)` in favor of a `for` loop when optimizing hot paths.
+- Avoid hash-based structures when `Hashable`/`Equatable` is expensive or keys are large structs.
+- Minimize allocations on hot paths; prefer POD structs and upfront allocation when possible.
+- Watch for accidental O(n^2) patterns (e.g., `contains`, `remove(at:)`, `firstIndex(of:)`) inside loops.
 
 ## Code review checklist
-- Big-O: any accidental O(n^2) behavior from nested loops / repeated firstIndex(of:) / repeated sorting?
-- Allocations: repeated temporary collections, repeated string interpolation, bridging to Foundation in loops?
-- Copying: repeated concatenation, Data/Array growth without reserve, needless conversions.
-- Concurrency: actor isolation correctness, main-thread work, cancellation handling, task lifetime leaks.
-- I/O: batching, streaming, backpressure, avoiding excessive buffering.
+
+- Big-O: nested linear scans, repeated indexing searches, or repeated sorting?
+- Allocations: temporary collections, repeated bridging to Foundation, unnecessary string interpolation?
+- Copying: large struct copies, Data/Array growth without reserve, needless conversions?
+- Dispatch: avoidable dynamic dispatch, cross-module generic overhead?
+- Concurrency: actor isolation correctness, main-thread work, cancellation handling?
+
+## References
+
+- Swift stdlib: https://github.com/swiftlang/swift/tree/main/stdlib
 
 ## Output format when reviewing code
+
 - Start with 3-6 high-impact findings.
-- Include specific changes (snippets) and explain the performance mechanism (allocations avoided, reduced copies, fewer actor hops, etc.).
+- Include specific changes (snippets) and explain the performance mechanism.
 - Call out anything that needs profiling to confirm.
