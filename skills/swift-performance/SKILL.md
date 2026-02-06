@@ -35,7 +35,7 @@ compatibility: claude-code, codex, opencode
 
 ### Closures
 
-- Avoid capturing `var` in closures; it triggers heap allocation.
+- Avoid capturing `var` in escaping closures; it triggers heap allocation.
 - If a capturing closure is defined inside a function, consider `@inline(__always)` to remove overhead when appropriate.
 
 ### Data structures and algorithms
